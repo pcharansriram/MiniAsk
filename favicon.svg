@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="favMaroon" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#99141F"/>
+      <stop offset="100%" stop-color="#790D16"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#favMaroon)" stroke="#E5D3AF" stroke-width="2.5"/>
+  <!-- Chat bubble -->
+  <path d="M18 19h28a3 3 0 0 1 3 3v16a3 3 0 0 1-3 3h-14l-8 7v-7h-6a3 3 0 0 1-3-3V22a3 3 0 0 1 3-3z" fill="#F5EFE1"/>
+  <!-- Question mark inside -->
+  <path d="M32 25c2.5 0 4.5 1.8 4.5 4 0 2-2.5 3-2.5 4.5m0 3.5v.5" stroke="#790D16" stroke-width="3" stroke-linecap="round"/>
+  <!-- Shield Sparkle -->
+  <circle cx="48" cy="16" r="4.5" fill="#AEC4D4" stroke="#FAF6ED" stroke-width="1.5"/>
+</svg>

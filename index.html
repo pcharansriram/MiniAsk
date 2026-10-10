@@ -1,0 +1,3869 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MiniAsk is a privacy-first developer Q&amp;A platform and offline heuristic answer engine built with pure HTML5, CSS3, and Vanilla JavaScript.">
+  <meta name="keywords" content="MiniAsk, developer Q&amp;A, privacy, offline answers, Vanilla JS, HTML5, CSS3">
+  <meta name="author" content="MiniAsk Team">
+
+  <title>MiniAsk — Privacy-First Developer Q&amp;A &amp; Demo Heuristic Engine</title>
+
+  <!-- Scalable SVG Favicon -->
+  <link rel="icon" type="image/svg+xml" href="frontend/assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/icons/128x128.png">
+
+  <!-- Core External Vanilla Stylesheet -->
+  <link rel="stylesheet" href="frontend/css/style.css">
+
+  <!-- Embedded Bulletproof Stylesheet (Guarantees styling even under OneDrive sync locks or strict file:// security) -->
+  <style id="miniask-core-styles">
+/* ==========================================================================
+   MiniAsk — Design System & Stylesheet
+   Pure Vanilla CSS3 adhering to the 4-Color Brand Palette:
+   • Maroon:      #790D16
+   • Beige:       #E5D3AF
+   • Ivory:       #F5EFE1
+   • Powder Blue: #AEC4D4
+   ========================================================================== */
+
+:root {
+  /* Core Brand Tokens */
+  --color-maroon: #790D16;
+  --color-maroon-dark: #50080E;
+  --color-maroon-light: #9B121E;
+  --color-maroon-subtle: rgba(121, 13, 22, 0.08);
+  --color-maroon-glow: rgba(121, 13, 22, 0.22);
+
+  --color-beige: #E5D3AF;
+  --color-beige-light: #FAF3E6;
+  --color-beige-dark: #C9B284;
+  --color-beige-subtle: rgba(229, 211, 175, 0.35);
+
+  --color-ivory: #F5EFE1;
+  --color-ivory-card: #FFFFFF;
+  --color-ivory-alt: #FCFAF5;
+
+  --color-powder-blue: #AEC4D4;
+  --color-powder-blue-light: #DFE9F0;
+  --color-powder-blue-dark: #6D8FA6;
+  --color-powder-blue-subtle: rgba(174, 196, 212, 0.25);
+
+  /* Semantic Light Theme */
+  --bg-page: var(--color-ivory);
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #FFFFFF;
+  --bg-surface-subtle: var(--color-beige-light);
+  --bg-header: rgba(245, 239, 225, 0.92);
+
+  --text-main: #271417;
+  --text-muted: #5F4A4E;
+  --text-dim: #847275;
+  --text-inverse: #F5EFE1;
+
+  --border-subtle: rgba(121, 13, 22, 0.12);
+  --border-strong: var(--color-beige);
+  --border-active: var(--color-maroon);
+
+  --accent-primary: var(--color-maroon);
+  --accent-primary-hover: var(--color-maroon-light);
+  --accent-secondary: var(--color-powder-blue);
+  --accent-badge-bg: var(--color-beige-light);
+  --accent-badge-text: var(--color-maroon);
+
+  --code-bg: #211215;
+  --code-text: #F5EFE1;
+  --code-header-bg: #170B0E;
+
+  --shadow-sm: 0 2px 4px rgba(121, 13, 22, 0.04);
+  --shadow-md: 0 6px 18px -2px rgba(121, 13, 22, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 14px 34px -4px rgba(121, 13, 22, 0.14), 0 4px 10px -2px rgba(0, 0, 0, 0.06);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] {
+  --bg-page: #12090B;
+  --bg-surface: #1E1013;
+  --bg-surface-elevated: #281519;
+  --bg-surface-subtle: #170B0E;
+  --bg-header: rgba(18, 9, 11, 0.92);
+
+  --text-main: #F5EFE1;
+  --text-muted: #D9CBBE;
+  --text-dim: #A6958A;
+  --text-inverse: #12090B;
+
+  --border-subtle: rgba(229, 211, 175, 0.16);
+  --border-strong: rgba(229, 211, 175, 0.32);
+  --border-active: var(--color-powder-blue);
+
+  --accent-primary: #A31522;
+  --accent-primary-hover: #C21D2C;
+  --accent-secondary: var(--color-powder-blue);
+  --accent-badge-bg: rgba(174, 196, 212, 0.16);
+  --accent-badge-text: var(--color-powder-blue);
+
+  --code-bg: #0C0507;
+  --code-text: #F5EFE1;
+  --code-header-bg: #070304;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(229, 211, 175, 0.1);
+  --shadow-lg: 0 16px 38px -4px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(174, 196, 212, 0.25);
+}
+
+/* ==========================================================================
+   CSS Reset & Base
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-secondary);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg-header);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4.25rem;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.site-logo:hover {
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 2.5rem;
+  width: auto;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-link {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--accent-primary);
+  background-color: var(--color-maroon-subtle);
+  text-decoration: none;
+}
+
+.badge-counter {
+  background-color: var(--color-maroon);
+  color: var(--color-ivory);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-full);
+  line-height: 1.2;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-1px);
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-md);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Hero Section
+   ========================================================================== */
+.hero-section {
+  padding: 3.5rem 0 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.hero-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-beige-subtle);
+  border: 1px solid var(--color-beige-dark);
+  color: var(--accent-primary);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.hotkey-tag {
+  background-color: var(--color-maroon);
+  color: var(--color-ivory);
+  font-family: monospace;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.hero-title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  margin-bottom: 1rem;
+}
+
+.hero-title-highlight {
+  color: var(--color-maroon);
+  text-decoration: underline;
+  text-decoration-color: var(--color-powder-blue);
+  text-underline-offset: 6px;
+}
+
+.hero-subtitle {
+  font-size: 1.12rem;
+  color: var(--text-muted);
+  max-width: 38rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-maroon);
+  color: var(--color-ivory);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  box-shadow: 0 4px 14px var(--color-maroon-glow);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-maroon-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--color-maroon-glow);
+  text-decoration: none;
+  color: var(--color-ivory);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.hero-trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.trust-icon {
+  color: var(--color-maroon);
+}
+
+.hero-illustration-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-illustration {
+  width: 100%;
+  max-width: 480px;
+  filter: drop-shadow(0 12px 24px rgba(121, 13, 22, 0.1));
+}
+
+/* ==========================================================================
+   Ask & Demo Engine Section
+   ========================================================================== */
+.ask-section {
+  padding: 2rem 0;
+}
+
+.ask-panel-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--transition-normal);
+}
+
+.ask-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+  margin-bottom: 0.25rem;
+}
+
+.section-heading {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+}
+
+.section-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.ask-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ask-textarea {
+  width: 100%;
+  min-height: 5.5rem;
+  padding: 1rem;
+  background-color: var(--bg-surface-subtle);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text-main);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ask-textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--color-maroon-subtle);
+}
+
+.ask-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ask-category-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.select-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.form-select {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 1rem 0.45rem 0.65rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--color-ivory);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.trending-suggestions-block {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.trending-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.trending-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.trending-chip {
+  background-color: var(--color-beige-subtle);
+  border: 1px solid var(--color-beige-dark);
+  color: var(--text-main);
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--transition-fast);
+}
+
+.trending-chip:hover {
+  background-color: var(--color-beige);
+  border-color: var(--color-maroon);
+  color: var(--color-maroon);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Generated Demo Answer Card
+   ========================================================================== */
+.answer-result-card {
+  margin-top: 1.5rem;
+  background-color: var(--bg-surface-elevated);
+  border: 2px solid var(--color-powder-blue);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-lg);
+  animation: slideDownFade 0.3s ease-out;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-notice-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--color-powder-blue-subtle);
+  border: 1px solid var(--color-powder-blue);
+  color: var(--text-main);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.result-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-maroon);
+  margin-bottom: 0.65rem;
+}
+
+.result-text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.result-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.btn-text {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+}
+
+.btn-text:hover {
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   Feed Section & Filters
+   ========================================================================== */
+.feed-section {
+  padding: 2.5rem 0 3.5rem;
+}
+
+.feed-header-block {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.feed-count-badge {
+  background-color: var(--color-beige-subtle);
+  color: var(--color-maroon);
+  border: 1px solid var(--color-beige-dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.feed-controls-bar {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.search-and-sort-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-box-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 260px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.55rem 0.85rem 0.55rem 2.4rem;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.sort-and-bookmark-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.bookmark-toggle-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.bookmark-toggle-input {
+  cursor: pointer;
+  accent-color: var(--color-maroon);
+  width: 1rem;
+  height: 1rem;
+}
+
+.category-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.category-pill:hover {
+  background-color: var(--color-beige-subtle);
+  color: var(--text-main);
+}
+
+.category-pill.active {
+  background-color: var(--color-maroon);
+  border-color: var(--color-maroon);
+  color: var(--color-ivory);
+}
+
+/* ==========================================================================
+   Question Feed Cards
+   ========================================================================== */
+.questions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.question-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.question-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-beige-dark);
+}
+
+.question-card.highlight-pulse {
+  animation: pulseBorder 1.5s ease-out;
+}
+
+@keyframes pulseBorder {
+  0% { box-shadow: 0 0 0 4px var(--color-maroon); }
+  100% { box-shadow: var(--shadow-sm); }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.author-info {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.author-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background-color: var(--color-maroon);
+  color: var(--color-ivory);
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-beige);
+}
+
+.author-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.author-role {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.card-meta-right {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.category-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-badge-bg);
+  color: var(--accent-badge-text);
+  border: 1px solid var(--border-subtle);
+}
+
+.card-time {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.bookmark-btn {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-dim);
+  transition: all var(--transition-fast);
+}
+
+.bookmark-btn:hover {
+  background-color: var(--color-beige-subtle);
+  color: var(--color-maroon);
+}
+
+.bookmark-btn.bookmarked {
+  background-color: var(--color-maroon);
+  border-color: var(--color-maroon);
+  color: var(--color-ivory);
+}
+
+.bookmark-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+.card-question-text {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+}
+
+.card-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.tag-pill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-powder-blue-dark);
+  background-color: var(--color-powder-blue-subtle);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   Code Blocks & Syntax Styling
+   ========================================================================== */
+.code-block-wrapper {
+  margin: 0.85rem 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--code-bg);
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.85rem;
+  background-color: var(--code-header-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.code-lang-tag {
+  font-family: monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-powder-blue);
+  letter-spacing: 0.05em;
+}
+
+.copy-code-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-ivory);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all var(--transition-fast);
+}
+
+.copy-code-btn:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.copy-code-btn.copied {
+  background-color: #2e7d32;
+  border-color: #2e7d32;
+}
+
+.code-block-body {
+  padding: 0.85rem 1rem;
+  font-family: 'JetBrains Mono', Consolas, Monaco, 'Courier New', monospace;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--code-text);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* Syntax Tokens */
+.tok-keyword { color: #F48FB1; font-weight: 700; }
+.tok-string  { color: #A5D6A7; }
+.tok-comment { color: #80CBC4; font-style: italic; }
+.tok-builtin { color: var(--color-powder-blue); font-weight: 600; }
+.tok-number  { color: #FFE082; }
+
+/* ==========================================================================
+   Expandable Answer Section
+   ========================================================================== */
+.card-answer-section {
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+}
+
+.card-answer-section.is-collapsed {
+  max-height: 0;
+  margin-top: 0;
+}
+
+.card-answer-section.is-expanded {
+  max-height: 2000px;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--border-strong);
+}
+
+.answer-wrapper {
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.answer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.engine-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: var(--color-maroon-subtle);
+  border: 1px solid var(--color-maroon);
+  color: var(--color-maroon);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.answer-date {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+}
+
+.answer-summary {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+}
+
+.answer-explanation {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 0.85rem;
+}
+
+/* ==========================================================================
+   Card Footer & Actions
+   ========================================================================== */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.vote-controls {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  padding: 0.15rem 0.4rem;
+}
+
+.vote-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 50%;
+  transition: all var(--transition-fast);
+}
+
+.vote-btn:hover {
+  color: var(--color-maroon);
+}
+
+.vote-btn.upvote-btn.active {
+  color: var(--color-maroon);
+  font-weight: 800;
+}
+
+.vote-btn.downvote-btn.active {
+  color: var(--color-maroon-dark);
+  font-weight: 800;
+}
+
+.vote-score {
+  font-size: 0.88rem;
+  font-weight: 800;
+  min-width: 2rem;
+  text-align: center;
+  color: var(--text-main);
+}
+
+.vote-score.vote-bump {
+  transform: scale(1.25);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.footer-stats {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.stat-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.share-card-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color var(--transition-fast);
+}
+
+.share-card-btn:hover {
+  color: var(--color-maroon);
+}
+
+.expand-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--color-beige-subtle);
+  border: 1px solid var(--color-beige-dark);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.expand-toggle-btn:hover {
+  background-color: var(--color-beige);
+  border-color: var(--color-maroon);
+  color: var(--color-maroon);
+}
+
+/* ==========================================================================
+   Empty State
+   ========================================================================== */
+.empty-state {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background-color: var(--bg-surface);
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.empty-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.empty-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 28rem;
+  margin: 0 auto 1.5rem;
+}
+
+/* ==========================================================================
+   Contact & Feedback Section
+   ========================================================================== */
+.feedback-section {
+  padding: 3rem 0;
+  background-color: var(--bg-surface-subtle);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+.feedback-info-heading {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.feedback-info-text {
+  font-size: 0.98rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.privacy-pledge-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.pledge-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.pledge-text {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.feedback-form-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-md);
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.required-star {
+  color: var(--color-maroon);
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.92rem;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--color-maroon-subtle);
+}
+
+.form-input.input-error {
+  border-color: #d32f2f;
+  background-color: rgba(211, 47, 47, 0.04);
+}
+
+.field-error-msg {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #d32f2f;
+  min-height: 1.1rem;
+}
+
+.success-banner {
+  background-color: rgba(46, 125, 50, 0.12);
+  border: 1px solid #2e7d32;
+  color: #1b5e20;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  animation: slideDownFade 0.3s ease-out;
+}
+
+[data-theme="dark"] .success-banner {
+  background-color: rgba(76, 175, 80, 0.18);
+  border-color: #4caf50;
+  color: #a5d6a7;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer {
+  background-color: var(--bg-header);
+  border-top: 1px solid var(--border-subtle);
+  padding: 3rem 0 2rem;
+  margin-top: auto;
+}
+
+.footer-top-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.footer-brand-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  max-width: 24rem;
+  margin: 0.85rem 0 1.25rem;
+  line-height: 1.5;
+}
+
+.footer-heading {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.footer-links-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-link {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.footer-link:hover {
+  color: var(--accent-primary);
+}
+
+.footer-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+.reset-demo-btn {
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.reset-demo-btn:hover {
+  color: var(--color-maroon);
+  border-color: var(--color-maroon);
+}
+
+/* ==========================================================================
+   Toast Notification System
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  pointer-events: none;
+}
+
+.toast-item {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main);
+  min-width: 280px;
+  max-width: 420px;
+  animation: toastSlideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.toast-fade-out {
+  animation: toastSlideOut 0.25s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes toastSlideOut {
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+}
+
+.toast-item.toast-success { border-left: 4px solid #2e7d32; }
+.toast-item.toast-error   { border-left: 4px solid var(--color-maroon); }
+.toast-item.toast-warning { border-left: 4px solid #f57c00; }
+.toast-item.toast-info    { border-left: 4px solid var(--color-powder-blue); }
+
+.toast-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.toast-message {
+  flex: 1;
+  line-height: 1.35;
+}
+
+.toast-close {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-dim);
+  line-height: 1;
+}
+
+.toast-close:hover {
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-subtitle {
+    margin: 0 auto 2rem;
+  }
+
+  .hero-cta-group, .hero-trust-row {
+    justify-content: center;
+  }
+
+  .hero-illustration-wrapper {
+    order: -1;
+    margin-bottom: 1rem;
+  }
+
+  .hero-illustration {
+    max-width: 360px;
+  }
+
+  .feedback-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 4.25rem;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-strong);
+    flex-direction: column;
+    padding: 1.25rem;
+    gap: 0.75rem;
+    display: none;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .nav-menu.nav-open {
+    display: flex;
+  }
+
+  .hero-title {
+    font-size: 2.1rem;
+  }
+
+  .ask-panel-card {
+    padding: 1.25rem;
+  }
+
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .toast-container {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast-item {
+    min-width: unset;
+    width: 100%;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       Site Header & Navigation
+       ========================================================================= -->
+  <header class="site-header" role="banner">
+    <div class="container header-container">
+      <a href="#hero-section" class="site-logo" aria-label="MiniAsk Home">
+        <svg class="logo-image" style="height:2.4rem;width:auto;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48" fill="none">
+  <!-- MiniAsk Brand Logo -->
+  <defs>
+    <linearGradient id="maroonGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#99141F"/>
+      <stop offset="100%" stop-color="#790D16"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#DCE7EE"/>
+      <stop offset="100%" stop-color="#AEC4D4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon Mark -->
+  <rect x="4" y="4" width="40" height="40" rx="10" fill="url(#maroonGrad)" stroke="#E5D3AF" stroke-width="1.5"/>
+  <!-- Speech / Prompt Bubble with Ask sparkle -->
+  <path d="M16 16h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-4 4v-4h-3a2 2 0 0 1-2-2V18a2 2 0 0 1 2-2z" fill="#F5EFE1" opacity="0.95"/>
+  <!-- Question / Sparkle element -->
+  <path d="M24 19a2.5 2.5 0 0 1 2.5 2.5c0 1.25-1.5 1.75-1.5 2.5m0 2.5v.5" stroke="#790D16" stroke-width="2" stroke-linecap="round"/>
+  <!-- Shield privacy indicator dot -->
+  <circle cx="34" cy="14" r="3" fill="#AEC4D4" stroke="#F5EFE1" stroke-width="1"/>
+
+  <!-- Brand Typography -->
+  <text x="56" y="28" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="20" fill="currentColor" letter-spacing="-0.5">Mini<tspan fill="#790D16">Ask</tspan></text>
+  <text x="57" y="39" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="9" fill="#AEC4D4" letter-spacing="1.2">PRIVACY Q&amp;A</text>
+</svg>
+
+      </a>
+
+      <!-- Primary Navigation -->
+      <nav id="primary-nav" aria-label="Main Navigation">
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#hero-section" class="nav-link">Home</a></li>
+          <li><a href="#ask-section" class="nav-link">Ask Engine</a></li>
+          <li><a href="#feed-section" class="nav-link">Community Feed</a></li>
+          <li>
+            <a href="#feed-section" class="nav-link" id="nav-bookmarks-link" title="View saved bookmarks">
+              <span>Saved</span>
+              <span class="badge-counter" id="header-bookmarks-badge" style="display: none;">0</span>
+            </a>
+          </li>
+          <li><a href="#feedback-section" class="nav-link">Contact &amp; Feedback</a></li>
+        </ul>
+      </nav>
+
+      <!-- Action Controls -->
+      <div class="header-actions">
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <span id="theme-icon">☀️</span>
+          <span id="theme-label">Light</span>
+        </button>
+
+        <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       Main Content Area
+       ========================================================================= -->
+  <main id="main-content">
+
+    <!-- 1. Hero Section -->
+    <section id="hero-section" class="hero-section" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-pill-badge">
+              <span>🛡️ Explicit Security Boundary</span>
+              <span class="hotkey-tag">Alt + Space</span>
+            </div>
+
+            <h1 id="hero-heading" class="hero-title">
+              Instant Answers.<br>
+              <span class="hero-title-highlight">Zero Cloud Leaks.</span><br>
+              Developer Privacy First.
+            </h1>
+
+            <p class="hero-subtitle">
+              MiniAsk protects your code buffers, tokens, and credentials with transparent client-side heuristics. Ask any technical question or browse verified community solutions without sending private data to third-party AI clouds.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#ask-section" class="btn-primary">
+                <span>⚡</span>
+                <span>Ask Heuristic Engine</span>
+              </a>
+              <a href="#feed-section" class="btn-secondary">
+                <span>📚</span>
+                <span>Browse Community Feed</span>
+              </a>
+            </div>
+
+            <div class="hero-trust-row">
+              <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Pure Vanilla Frontend</span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>100% Offline Compatible</span>
+              </div>
+              <div class="trust-item">
+                <span class="trust-icon">✓</span>
+                <span>Local Redaction Rules</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-illustration-wrapper">
+            <svg class="hero-illustration" style="width:100%;max-width:480px;height:auto;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 380" width="540" height="380" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="50" y1="20" x2="250" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#99141F"/>
+      <stop offset="100%" stop-color="#790D16"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="160" y1="80" x2="520" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F5EFE1"/>
+      <stop offset="100%" stop-color="#E5D3AF"/>
+    </linearGradient>
+    <linearGradient id="blueAccent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#DCE7EE"/>
+      <stop offset="100%" stop-color="#AEC4D4"/>
+    </linearGradient>
+    <filter id="cardShadow" x="140" y="60" width="400" height="300" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#790D16" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow Circles -->
+  <circle cx="160" cy="180" r="140" fill="#E5D3AF" opacity="0.3"/>
+  <circle cx="390" cy="190" r="120" fill="#AEC4D4" opacity="0.25"/>
+
+  <!-- Code Card / Context Window Preview (Backdrop) -->
+  <g filter="url(#cardShadow)">
+    <rect x="170" y="70" width="340" height="250" rx="18" fill="#FFFFFF" stroke="#E5D3AF" stroke-width="2"/>
+    
+    <!-- Window Bar -->
+    <rect x="170" y="70" width="340" height="38" rx="18" fill="#F5EFE1"/>
+    <circle cx="194" cy="89" r="5" fill="#790D16"/>
+    <circle cx="210" cy="89" r="5" fill="#E5D3AF"/>
+    <circle cx="226" cy="89" r="5" fill="#AEC4D4"/>
+    <text x="250" y="93" font-family="monospace" font-size="11" fill="#790D16" font-weight="600">mini-ask.py • sanitized</text>
+
+    <!-- Code Lines inside -->
+    <rect x="195" y="126" width="140" height="10" rx="5" fill="#790D16" opacity="0.8"/>
+    <rect x="345" y="126" width="90" height="10" rx="5" fill="#AEC4D4"/>
+    <rect x="195" y="148" width="220" height="10" rx="5" fill="#E5D3AF"/>
+    
+    <!-- Redacted Secret Pill (Highlights local privacy protection) -->
+    <rect x="195" y="170" width="260" height="24" rx="6" fill="#790D16" opacity="0.08"/>
+    <rect x="205" y="176" width="130" height="12" rx="4" fill="#790D16"/>
+    <text x="210" y="185" font-family="monospace" font-size="9" fill="#F5EFE1" font-weight="bold">[REDACTED_API_KEY]</text>
+    <rect x="345" y="177" width="90" height="10" rx="5" fill="#AEC4D4"/>
+
+    <!-- Solution / Output Card -->
+    <rect x="195" y="210" width="290" height="85" rx="10" fill="#FAF6ED" stroke="#AEC4D4" stroke-width="1.2"/>
+    <circle cx="215" cy="230" r="7" fill="#790D16"/>
+    <path d="M213 230l1.5 1.5 3-3" stroke="#F5EFE1" stroke-width="1.5" stroke-linecap="round"/>
+    <text x="230" y="234" font-family="sans-serif" font-size="11" font-weight="bold" fill="#790D16">Heuristic Diagnosis &amp; Fix Verified</text>
+    <rect x="215" y="248" width="250" height="8" rx="4" fill="#AEC4D4" opacity="0.7"/>
+    <rect x="215" y="264" width="180" height="8" rx="4" fill="#E5D3AF"/>
+    <rect x="215" y="278" width="120" height="8" rx="4" fill="#790D16" opacity="0.5"/>
+  </g>
+
+  <!-- Big Privacy Shield (Foreground Left) -->
+  <g transform="translate(40, 70)">
+    <path d="M75 10 L140 38 C140 120 75 165 75 165 C75 165 10 120 10 38 Z" fill="url(#shieldGrad)" stroke="#E5D3AF" stroke-width="3"/>
+    <!-- Inner Accent -->
+    <path d="M75 24 L126 48 C126 114 75 151 75 151 C75 151 24 114 24 48 Z" fill="none" stroke="#F5EFE1" stroke-width="1.5" opacity="0.6"/>
+    <!-- Lock / Sparkle inside shield -->
+    <rect x="62" y="80" width="26" height="22" rx="4" fill="#F5EFE1"/>
+    <path d="M67 80 V70 C67 65.5 71 62 75 62 C79 62 83 65.5 83 70 V80" stroke="#F5EFE1" stroke-width="3" fill="none"/>
+    <circle cx="75" cy="91" r="2.5" fill="#790D16"/>
+    <!-- Floating status badge -->
+    <rect x="20" y="172" width="110" height="24" rx="12" fill="#F5EFE1" stroke="#AEC4D4" stroke-width="1.5"/>
+    <circle cx="32" cy="184" r="4" fill="#790D16"/>
+    <text x="42" y="188" font-family="sans-serif" font-size="10" font-weight="bold" fill="#790D16">100% Client-Side</text>
+  </g>
+
+  <!-- Floating Hotkey Capsule -->
+  <g transform="translate(360, 40)">
+    <rect width="130" height="34" rx="17" fill="#790D16" stroke="#E5D3AF" stroke-width="1.5"/>
+    <text x="18" y="22" font-family="monospace" font-size="12" font-weight="bold" fill="#F5EFE1">Alt + Space</text>
+  </g>
+</svg>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Question Asker & Demo Engine Section -->
+    <section id="ask-section" class="ask-section" aria-labelledby="ask-heading">
+      <div class="container">
+        <div class="ask-panel-card">
+          <div class="ask-header">
+            <div class="section-label">Interactive Demo Engine</div>
+            <h2 id="ask-heading" class="section-heading">Ask a Technical Question</h2>
+            <p class="section-desc">Type your error message or query below. MiniAsk evaluates it using local heuristic pattern matching.</p>
+          </div>
+
+          <form id="ask-form" class="ask-form" novalidate>
+            <label for="ask-input" class="sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">Type your question or error</label>
+            <textarea 
+              id="ask-input" 
+              class="ask-textarea" 
+              placeholder="e.g. Why do I get TypeError: unsupported operand type(s) for +=: 'int' and 'str'? How to fix CORS errors?"
+              rows="3"
+              required></textarea>
+
+            <div class="ask-controls-row">
+              <div class="ask-category-wrapper">
+                <label for="ask-category-select" class="select-label">Category:</label>
+                <select id="ask-category-select" class="form-select">
+                  <option value="all">Auto-Detect</option>
+                  <option value="frontend">Frontend (HTML/CSS/JS)</option>
+                  <option value="backend">Backend &amp; APIs</option>
+                  <option value="security">Security &amp; Privacy</option>
+                  <option value="python">Python &amp; Data</option>
+                  <option value="desktop">Windows &amp; Desktop</option>
+                </select>
+              </div>
+
+              <button type="submit" id="ask-submit-btn" class="btn-primary">
+                <span id="ask-spinner" class="spinner" style="display: none;" aria-hidden="true"></span>
+                <span id="ask-btn-text">Ask MiniAsk</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Generated Demo Answer Card -->
+          <div id="answer-result-card" class="answer-result-card" style="display: none;" aria-live="polite">
+            <div id="answer-result-content"></div>
+            <div class="result-actions-row">
+              <button type="button" id="dismiss-answer-btn" class="btn-text">Dismiss</button>
+              <button type="button" id="publish-to-feed-btn" class="btn-primary">
+                <span>➕</span>
+                <span>Publish to Community Feed</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Trending Suggestions -->
+          <div class="trending-suggestions-block">
+            <div class="trending-header">
+              <span>Trending Queries</span>
+            </div>
+            <div class="trending-chips-row" id="trending-chips-container">
+              <!-- Dynamically populated from questions.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Community Q&A Feed Section -->
+    <section id="feed-section" class="feed-section" aria-labelledby="feed-heading">
+      <div class="container">
+        <div class="feed-header-block">
+          <div>
+            <div class="section-label">Knowledge Base</div>
+            <h2 id="feed-heading" class="section-heading">Community Q&amp;A Feed</h2>
+            <p class="section-desc">Search, filter, bookmark, and vote on verified technical solutions.</p>
+          </div>
+          <span class="feed-count-badge" id="feed-count-badge">Loading questions…</span>
+        </div>
+
+        <!-- Feed Filtering and Sorting Bar -->
+        <div class="feed-controls-bar">
+          <div class="search-and-sort-row">
+            <div class="search-box-wrapper">
+              <span class="search-icon" aria-hidden="true">🔍</span>
+              <input 
+                type="search" 
+                id="search-input" 
+                class="search-input" 
+                placeholder="Search questions, answers, tags, or code snippets…" 
+                aria-label="Search questions">
+            </div>
+
+            <div class="sort-and-bookmark-controls">
+              <label for="sort-select" class="select-label">Sort By:</label>
+              <select id="sort-select" class="form-select">
+                <option value="recent">Most Recent</option>
+                <option value="upvotes">Highest Upvoted</option>
+                <option value="views">Most Viewed</option>
+              </select>
+
+              <label class="bookmark-toggle-label" for="bookmarks-filter-toggle">
+                <input type="checkbox" id="bookmarks-filter-toggle" class="bookmark-toggle-input">
+                <span>★ Saved Only</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Category Pills Tabs -->
+          <div class="category-pills-row" id="category-pills-container" role="tablist" aria-label="Question Categories">
+            <!-- Dynamically populated from questions.js -->
+          </div>
+        </div>
+
+        <!-- Questions Feed List Container -->
+        <div id="questions-list-container" class="questions-list">
+          <!-- Dynamically populated from main.js -->
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="empty-state-container" class="empty-state" style="display: none;">
+          <span class="empty-icon" aria-hidden="true">🔎</span>
+          <h3 class="empty-title">No Matching Questions Found</h3>
+          <p class="empty-desc">We couldn't find any questions matching your current filters or search keywords.</p>
+          <button type="button" id="clear-filters-btn" class="btn-secondary">Clear All Filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Contact & Feedback Form Section -->
+    <section id="feedback-section" class="feedback-section" aria-labelledby="feedback-heading">
+      <div class="container">
+        <div class="feedback-grid">
+          <div class="feedback-info">
+            <div class="section-label">Connect &amp; Contribute</div>
+            <h2 id="feedback-heading" class="feedback-info-heading">Feedback &amp; Inquiries</h2>
+            <p class="feedback-info-text">
+              Have suggestions for new heuristic rule sets, local redaction patterns, or privacy enhancements? Send us a message below.
+            </p>
+
+            <div class="privacy-pledge-card">
+              <div class="pledge-title">
+                <span>🔒</span>
+                <span>Client-Side Privacy Guarantee</span>
+              </div>
+              <p class="pledge-text">
+                Your submissions are stored locally in your browser's LocalStorage. No server telemetry, trackers, or external database logs are ever triggered.
+              </p>
+            </div>
+          </div>
+
+          <div class="feedback-form-card">
+            <div id="feedback-success-notice" class="success-banner" style="display: none;" role="status">
+              ✓ Thank you! Your feedback has been stored safely in your client browser session.
+            </div>
+
+            <form id="feedback-form" class="feedback-form" novalidate>
+              <div class="form-group">
+                <label for="fb-name" class="form-label">
+                  Your Full Name <span class="required-star">*</span>
+                </label>
+                <input type="text" id="fb-name" class="form-input" placeholder="e.g. Alex Turing" required>
+                <div id="fb-name-error" class="field-error-msg" role="alert"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="fb-email" class="form-label">
+                  Email Address <span class="required-star">*</span>
+                </label>
+                <input type="email" id="fb-email" class="form-input" placeholder="e.g. alex@example.com" required>
+                <div id="fb-email-error" class="field-error-msg" role="alert"></div>
+              </div>
+
+              <div class="form-group">
+                <label for="fb-category" class="form-label">Feedback Topic</label>
+                <select id="fb-category" class="form-select" style="width: 100%;">
+                  <option value="general">General Suggestion</option>
+                  <option value="heuristic">New Heuristic Rule Proposal</option>
+                  <option value="privacy">Security &amp; Redaction Enhancement</option>
+                  <option value="bug">Bug Report / UX Issue</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="fb-message" class="form-label">
+                  Message <span class="required-star">*</span>
+                </label>
+                <textarea id="fb-message" class="form-input" rows="4" placeholder="Share your detailed feedback or rule suggestions (at least 10 characters)..." required></textarea>
+                <div id="fb-message-error" class="field-error-msg" role="alert"></div>
+              </div>
+
+              <button type="submit" class="btn-primary" style="align-self: flex-start;">
+                <span>✉️</span>
+                <span>Submit Feedback</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       Site Footer
+       ========================================================================= -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top-grid">
+        <div class="footer-brand-col">
+          <a href="#hero-section" class="site-logo">
+            <svg class="logo-image" style="height:2.2rem;width:auto;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48" fill="none">
+  <!-- MiniAsk Brand Logo -->
+  <defs>
+    <linearGradient id="maroonGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#99141F"/>
+      <stop offset="100%" stop-color="#790D16"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#DCE7EE"/>
+      <stop offset="100%" stop-color="#AEC4D4"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon Mark -->
+  <rect x="4" y="4" width="40" height="40" rx="10" fill="url(#maroonGrad)" stroke="#E5D3AF" stroke-width="1.5"/>
+  <!-- Speech / Prompt Bubble with Ask sparkle -->
+  <path d="M16 16h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-9l-4 4v-4h-3a2 2 0 0 1-2-2V18a2 2 0 0 1 2-2z" fill="#F5EFE1" opacity="0.95"/>
+  <!-- Question / Sparkle element -->
+  <path d="M24 19a2.5 2.5 0 0 1 2.5 2.5c0 1.25-1.5 1.75-1.5 2.5m0 2.5v.5" stroke="#790D16" stroke-width="2" stroke-linecap="round"/>
+  <!-- Shield privacy indicator dot -->
+  <circle cx="34" cy="14" r="3" fill="#AEC4D4" stroke="#F5EFE1" stroke-width="1"/>
+
+  <!-- Brand Typography -->
+  <text x="56" y="28" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="20" fill="currentColor" letter-spacing="-0.5">Mini<tspan fill="#790D16">Ask</tspan></text>
+  <text x="57" y="39" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-weight="600" font-size="9" fill="#AEC4D4" letter-spacing="1.2">PRIVACY Q&amp;A</text>
+</svg>
+
+          </a>
+          <p class="footer-brand-desc">
+            MiniAsk is a zero-leak, privacy-focused Q&amp;A platform and offline heuristic answer engine. Built entirely with pure HTML5, CSS3, and Vanilla JavaScript.
+          </p>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-heading">Navigation</h4>
+          <ul class="footer-links-list">
+            <li><a href="#hero-section" class="footer-link">Home</a></li>
+            <li><a href="#ask-section" class="footer-link">Ask Engine</a></li>
+            <li><a href="#feed-section" class="footer-link">Community Feed</a></li>
+            <li><a href="#feedback-section" class="footer-link">Feedback</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4 class="footer-heading">Architecture</h4>
+          <ul class="footer-links-list">
+            <li><span class="footer-link">Pure HTML5 &amp; CSS3</span></li>
+            <li><span class="footer-link">Vanilla JavaScript</span></li>
+            <li><span class="footer-link">Browser LocalStorage</span></li>
+            <li><span class="footer-link">Offline Compatible</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>
+          &copy; 2026 MiniAsk. Open source project under MIT License. No third-party AI APIs or trackers used.
+        </div>
+        <div>
+          <button type="button" id="reset-demo-data-btn" class="reset-demo-btn" title="Reset questions, votes, and bookmarks back to default demo seeds">
+            ↺ Reset Demo Seeds
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       Vanilla JavaScript Modules
+       Loaded in dependency order + fallback embedded bundle to prevent OneDrive sync lockouts
+       ========================================================================= -->
+  <script src="frontend/js/utils.js"></script>
+  <script src="frontend/js/storage.js"></script>
+  <script src="frontend/js/questions.js"></script>
+  <script src="frontend/js/main.js"></script>
+
+  <!-- Fallback Embedded JavaScript (Executes if external scripts fail to load via OneDrive/file://) -->
+  <script>
+    if (!window.MiniAskMainLoaded) {
+      /**
+ * MiniAsk — Pure Vanilla JavaScript Utilities
+ * Safe helper functions for UI rendering, formatting, toast alerts, and security.
+ */
+
+(function (window) {
+  'use strict';
+
+  const MiniAskUtils = {
+    /**
+     * Escape special HTML characters to prevent XSS injection.
+     * @param {string} str
+     * @returns {string}
+     */
+    escapeHTML(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    },
+
+    /**
+     * Human-friendly relative timestamp (e.g. "Just now", "5m ago", "2h ago", "3d ago").
+     * @param {string|number|Date} dateInput
+     * @returns {string}
+     */
+    formatRelativeTime(dateInput) {
+      if (!dateInput) return 'Recently';
+      const date = new Date(dateInput);
+      const now = new Date();
+      const diffMs = now.getTime() - date.getTime();
+
+      if (isNaN(diffMs) || diffMs < 0) return 'Just now';
+
+      const diffSec = Math.floor(diffMs / 1000);
+      const diffMin = Math.floor(diffSec / 60);
+      const diffHour = Math.floor(diffMin / 60);
+      const diffDay = Math.floor(diffHour / 24);
+
+      if (diffSec < 45) return 'Just now';
+      if (diffMin < 60) return `${diffMin}m ago`;
+      if (diffHour < 24) return `${diffHour}h ago`;
+      if (diffDay === 1) return 'Yesterday';
+      if (diffDay < 30) return `${diffDay}d ago`;
+
+      return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    },
+
+    /**
+     * Format a date into standard readable format.
+     * @param {string|number|Date} dateInput
+     * @returns {string}
+     */
+    formatDate(dateInput) {
+      if (!dateInput) return '';
+      const date = new Date(dateInput);
+      if (isNaN(date.getTime())) return '';
+      return date.toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    },
+
+    /**
+     * Truncate text cleanly with ellipsis.
+     * @param {string} text
+     * @param {number} max
+     * @returns {string}
+     */
+    truncate(text, max = 140) {
+      if (!text) return '';
+      if (text.length <= max) return text;
+      return text.slice(0, max).trimEnd() + '…';
+    },
+
+    /**
+     * Standard debounce function.
+     * @param {Function} func
+     * @param {number} wait
+     * @returns {Function}
+     */
+    debounce(func, wait = 250) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    },
+
+    /**
+     * Copy text to clipboard safely.
+     * @param {string} text
+     * @returns {Promise<boolean>}
+     */
+    async copyToClipboard(text) {
+      if (!text) return false;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (err) {
+        // Fallback for older browsers or file:// context
+      }
+
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        textArea.style.top = '-9999px';
+        textArea.setAttribute('readonly', '');
+        document.body.appendChild(textArea);
+        textArea.select();
+        const success = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        return success;
+      } catch (e) {
+        return false;
+      }
+    },
+
+    /**
+     * Display a sleek, accessible toast notification.
+     * @param {string} message
+     * @param {'info'|'success'|'warning'|'error'} type
+     * @param {number} duration
+     */
+    showToast(message, type = 'info', duration = 3000) {
+      let container = document.getElementById('miniask-toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'miniask-toast-container';
+        container.className = 'toast-container';
+        container.setAttribute('aria-live', 'polite');
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      toast.className = `toast-item toast-${type}`;
+      toast.setAttribute('role', 'alert');
+
+      const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠',
+        info: 'ℹ'
+      };
+
+      toast.innerHTML = `
+        <span class="toast-icon">${icons[type] || 'ℹ'}</span>
+        <span class="toast-message">${this.escapeHTML(message)}</span>
+        <button class="toast-close" aria-label="Dismiss alert">&times;</button>
+      `;
+
+      const removeToast = () => {
+        toast.classList.add('toast-fade-out');
+        toast.addEventListener('animationend', () => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+          }
+        });
+      };
+
+      toast.querySelector('.toast-close').addEventListener('click', removeToast);
+      container.appendChild(toast);
+
+      setTimeout(removeToast, duration);
+    },
+
+    /**
+     * Generate unique client-side ID.
+     * @param {string} prefix
+     * @returns {string}
+     */
+    generateId(prefix = 'q') {
+      return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+    },
+
+    /**
+     * Lightweight syntax highlighter without external dependencies.
+     * Tokenizes code strings into keyword, string, comment, and number spans.
+     * @param {string} rawCode
+     * @param {string} lang
+     * @returns {string}
+     */
+    renderCodeBlock(rawCode, lang = 'code') {
+      const escaped = this.escapeHTML(rawCode.trim());
+
+      // Simple regex token replacement on safe escaped text
+      const highlighted = escaped
+        // Comments
+        .replace(/(#.*|\/\/.*)$/gm, '<span class="tok-comment">$1</span>')
+        // Strings
+        .replace(/(&quot;.*?&quot;|&#39;.*?&#39;|`.*?`)/g, '<span class="tok-string">$1</span>')
+        // Keywords
+        .replace(/\b(def|return|for|in|import|from|class|if|else|elif|try|except|as|async|await|const|let|var|function|throw|new|typeof|interface|type)\b/g, '<span class="tok-keyword">$1</span>')
+        // Builtins / Booleans
+        .replace(/\b(True|False|None|true|false|null|undefined|print|console|Math|Array|Object)\b/g, '<span class="tok-builtin">$1</span>')
+        // Numbers
+        .replace(/\b(\d+)\b/g, '<span class="tok-number">$1</span>');
+
+      return `
+        <div class="code-block-wrapper">
+          <div class="code-block-header">
+            <span class="code-lang-tag">${this.escapeHTML(lang)}</span>
+            <button class="copy-code-btn" type="button" aria-label="Copy code snippet">
+              <span class="copy-btn-icon">📋</span>
+              <span class="copy-btn-text">Copy Code</span>
+            </button>
+          </div>
+          <pre class="code-block-body"><code>${highlighted}</code></pre>
+        </div>
+      `;
+    }
+  };
+
+  window.MiniAskUtils = MiniAskUtils;
+})(window);
+
+      /**
+ * MiniAsk — Pure Vanilla JavaScript LocalStorage Controller
+ * Provides type-safe persistence for questions, bookmarks, votes, themes, and user submissions.
+ */
+
+(function (window) {
+  'use strict';
+
+  const STORAGE_KEYS = {
+    THEME: 'miniask_theme_pref',
+    QUESTIONS: 'miniask_questions_store',
+    BOOKMARKS: 'miniask_user_bookmarks',
+    VOTES: 'miniask_user_votes',
+    FEEDBACK: 'miniask_feedback_messages'
+  };
+
+  const MiniAskStorage = {
+    /**
+     * Test if localStorage is functional.
+     */
+    isAvailable() {
+      try {
+        const testKey = '__miniask_test__';
+        window.localStorage.setItem(testKey, '1');
+        window.localStorage.removeItem(testKey);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    },
+
+    // -------------------------------------------------------------
+    // Theme Management
+    // -------------------------------------------------------------
+    getTheme() {
+      try {
+        const saved = window.localStorage.getItem(STORAGE_KEYS.THEME);
+        if (saved === 'light' || saved === 'dark') {
+          return saved;
+        }
+        // Fallback to system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      } catch (e) {
+        return 'light';
+      }
+    },
+
+    setTheme(theme) {
+      try {
+        window.localStorage.setItem(STORAGE_KEYS.THEME, theme);
+      } catch (e) {
+        console.warn('MiniAsk: Failed to save theme in localStorage', e);
+      }
+    },
+
+    // -------------------------------------------------------------
+    // Questions Management
+    // -------------------------------------------------------------
+    getQuestions() {
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEYS.QUESTIONS);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : null;
+      } catch (e) {
+        console.error('MiniAsk: Error reading questions from localStorage', e);
+        return null;
+      }
+    },
+
+    saveQuestions(questions) {
+      try {
+        window.localStorage.setItem(STORAGE_KEYS.QUESTIONS, JSON.stringify(questions));
+        return true;
+      } catch (e) {
+        console.error('MiniAsk: Failed to save questions to localStorage', e);
+        return false;
+      }
+    },
+
+    addQuestion(question) {
+      const current = this.getQuestions() || [];
+      const updated = [question, ...current];
+      this.saveQuestions(updated);
+      return updated;
+    },
+
+    updateQuestion(id, updates) {
+      const current = this.getQuestions() || [];
+      const index = current.findIndex((q) => q.id === id);
+      if (index === -1) return false;
+
+      current[index] = {
+        ...current[index],
+        ...updates
+      };
+      this.saveQuestions(current);
+      return current[index];
+    },
+
+    // -------------------------------------------------------------
+    // Bookmarks Management
+    // -------------------------------------------------------------
+    getBookmarks() {
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEYS.BOOKMARKS);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (e) {
+        return [];
+      }
+    },
+
+    isBookmarked(questionId) {
+      const bookmarks = this.getBookmarks();
+      return bookmarks.includes(questionId);
+    },
+
+    toggleBookmark(questionId) {
+      const bookmarks = this.getBookmarks();
+      const index = bookmarks.indexOf(questionId);
+      let isSaved = false;
+
+      if (index > -1) {
+        bookmarks.splice(index, 1);
+        isSaved = false;
+      } else {
+        bookmarks.push(questionId);
+        isSaved = true;
+      }
+
+      try {
+        window.localStorage.setItem(STORAGE_KEYS.BOOKMARKS, JSON.stringify(bookmarks));
+      } catch (e) {
+        console.error('MiniAsk: Could not save bookmark state', e);
+      }
+
+      return { isBookmarked: isSaved, count: bookmarks.length };
+    },
+
+    // -------------------------------------------------------------
+    // Upvote / Downvote Vote Tracking
+    // -------------------------------------------------------------
+    getUserVotes() {
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEYS.VOTES);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    },
+
+    getUserVote(questionId) {
+      const votes = this.getUserVotes();
+      return votes[questionId] || 0; // 1 for upvoted, -1 for downvoted, 0 for neutral
+    },
+
+    recordVote(questionId, direction) {
+      const votes = this.getUserVotes();
+      const currentVote = votes[questionId] || 0;
+      let newVote = direction;
+
+      // Toggle off if clicking the same vote twice
+      if (currentVote === direction) {
+        newVote = 0;
+      }
+
+      votes[questionId] = newVote;
+
+      try {
+        window.localStorage.setItem(STORAGE_KEYS.VOTES, JSON.stringify(votes));
+      } catch (e) {
+        console.error('MiniAsk: Could not save vote', e);
+      }
+
+      // Calculate score delta for question
+      const delta = newVote - currentVote;
+      return { newVote, delta };
+    },
+
+    // -------------------------------------------------------------
+    // Feedback Form Submissions
+    // -------------------------------------------------------------
+    saveFeedback(feedbackObj) {
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEYS.FEEDBACK);
+        const list = raw ? JSON.parse(raw) : [];
+        list.push({
+          ...feedbackObj,
+          id: 'fb_' + Date.now(),
+          timestamp: new Date().toISOString()
+        });
+        window.localStorage.setItem(STORAGE_KEYS.FEEDBACK, JSON.stringify(list));
+        return true;
+      } catch (e) {
+        console.error('MiniAsk: Could not save feedback', e);
+        return false;
+      }
+    },
+
+    getFeedbackList() {
+      try {
+        const raw = window.localStorage.getItem(STORAGE_KEYS.FEEDBACK);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    },
+
+    // -------------------------------------------------------------
+    // Storage Reset / Purge
+    // -------------------------------------------------------------
+    clearQuestions() {
+      try {
+        window.localStorage.removeItem(STORAGE_KEYS.QUESTIONS);
+      } catch (e) {}
+    },
+
+    resetAllData() {
+      try {
+        window.localStorage.removeItem(STORAGE_KEYS.QUESTIONS);
+        window.localStorage.removeItem(STORAGE_KEYS.BOOKMARKS);
+        window.localStorage.removeItem(STORAGE_KEYS.VOTES);
+      } catch (e) {}
+    }
+  };
+
+  window.MiniAskStorage = MiniAskStorage;
+})(window);
+
+      /**
+ * MiniAsk — Questions & Demo Answer Engine Module
+ * Contains default community Q&A seeds, trending suggestions, and the extensible
+ * offline heuristic rule-based answer generation engine.
+ *
+ * NOTE: As required, this does NOT use external AI APIs or cloud models.
+ * All answers are generated deterministically using transparent heuristics.
+ */
+
+(function (window) {
+  'use strict';
+
+  const SEED_QUESTIONS = [
+    {
+      id: 'q_seed_1',
+      title: 'TypeError: unsupported operand type(s) for +=: \'int\' and \'str\' in Python',
+      author: 'Alex Dev',
+      authorRole: 'Software Engineer',
+      avatarInitial: 'A',
+      category: 'python',
+      categoryLabel: 'Python & APIs',
+      tags: ['python', 'typeerror', 'data-types', 'debugging'],
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(), // 3 hours ago
+      views: 342,
+      upvotes: 48,
+      downvotes: 1,
+      isAnswered: true,
+      questionBody: 'I have a function calculating total items, but it throws: TypeError: unsupported operand type(s) for +=: \'int\' and \'str\'. Why does this happen when one item price is loaded from json?',
+      codeSnippet: `def calculate_total(items):\n    total = 0\n    for item in items:\n        total += item.price  # Throws TypeError\n    return total`,
+      snippetLang: 'python',
+      answer: {
+        summary: 'One or more items has a string value (e.g. "24.99") instead of a float/integer, causing Python to reject numeric addition.',
+        explanation: 'In Python, the `+=` operator cannot implicitly cast a string into a number. When reading from JSON or APIs, numbers frequently arrive as strings. You must explicitly cast `item.price` to `float()` or validate the numeric type before performing arithmetic.',
+        solutionCode: `def calculate_total(items):\n    total = 0.0\n    for item in items:\n        # Explicitly convert to float to prevent TypeError\n        price = float(item.price) if hasattr(item, 'price') else 0.0\n        total += price\n    return round(total, 2)`,
+        solutionLang: 'python',
+        engineLabel: 'MiniAsk Heuristic Engine (Offline Rule Matcher)',
+        answeredAt: new Date(Date.now() - 1000 * 60 * 60 * 2.5).toISOString()
+      }
+    },
+    {
+      id: 'q_seed_2',
+      title: 'How does MiniAsk protect private API tokens and passwords before asking AI?',
+      author: 'Elena Rostova',
+      authorRole: 'Security Researcher',
+      avatarInitial: 'E',
+      category: 'security',
+      categoryLabel: 'Security & Privacy',
+      tags: ['privacy', 'redaction', 'security', 'zero-trust'],
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(), // 8 hours ago
+      views: 521,
+      upvotes: 76,
+      downvotes: 0,
+      isAnswered: true,
+      questionBody: 'Does MiniAsk send entire screens or active buffers to external servers? How are credentials sanitized before any data leaves the local machine?',
+      codeSnippet: `// Example sensitive snippet detected in code buffer:\nconst apiKey = "sk-proj-999384729104847201948";\nconst dbPassword = "SuperSecretPassword123!";`,
+      snippetLang: 'javascript',
+      answer: {
+        summary: 'MiniAsk operates on an explicit-request boundary with local regex and AST sanitization before any network request is allowed.',
+        explanation: 'Unlike background monitor tools, MiniAsk triggers ONLY when explicitly invoked (e.g. clicking or pressing Alt+Space). Captured context is parsed in memory through local pattern matchers for OpenAI keys, AWS keys, JWTs, emails, and passwords, replacing them with [REDACTED_SECRET]. The user must review and click "Approve" before anything is sent.',
+        solutionCode: `// Local Redaction Pipeline Concept (Pure Client/Local):\nfunction sanitizeText(raw) {\n  return raw\n    .replace(/sk-[a-zA-Z0-9_-]{20,}/g, '[REDACTED_API_KEY]')\n    .replace(/ghp_[a-zA-Z0-9]{36}/g, '[REDACTED_GITHUB_PAT]')\n    .replace(/bearer\\s+[a-zA-Z0-9\\._-]+/gi, 'Bearer [REDACTED_TOKEN]');\n}`,
+        solutionLang: 'javascript',
+        engineLabel: 'MiniAsk Heuristic Engine (Offline Architecture Spec)',
+        answeredAt: new Date(Date.now() - 1000 * 60 * 60 * 7.5).toISOString()
+      }
+    },
+    {
+      id: 'q_seed_3',
+      title: 'How to fix CORS errors when calling local APIs from a browser frontend?',
+      author: 'Marcus Chen',
+      authorRole: 'Frontend Developer',
+      avatarInitial: 'M',
+      category: 'frontend',
+      categoryLabel: 'Frontend (HTML/CSS/JS)',
+      tags: ['cors', 'javascript', 'fetch', 'browsers'],
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 18).toISOString(),
+      views: 412,
+      upvotes: 35,
+      downvotes: 2,
+      isAnswered: true,
+      questionBody: 'Getting: "Access to fetch at http://localhost:8000 from origin http://localhost:3000 has been blocked by CORS policy: No \'Access-Control-Allow-Origin\' header". How do I fix this?',
+      codeSnippet: `fetch('http://localhost:8000/api/data')\n  .then(res => res.json())\n  .catch(err => console.error(err));`,
+      snippetLang: 'javascript',
+      answer: {
+        summary: 'CORS is a browser security mechanism. The backend server must return the appropriate Access-Control-Allow-Origin response header.',
+        explanation: 'Browsers block cross-origin HTTP requests unless the server gives permission. The fix MUST be made on the server or via a local proxy, not in the client fetch call.',
+        solutionCode: `// In Python FastAPI backend:\nfrom fastapi.middleware.cors import CORSMiddleware\n\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],\n    allow_credentials=True,\n    allow_methods=["*"],\n    allow_headers=["*"],\n)`,
+        solutionLang: 'python',
+        engineLabel: 'MiniAsk Heuristic Engine (Offline Rule Matcher)',
+        answeredAt: new Date(Date.now() - 1000 * 60 * 60 * 16).toISOString()
+      }
+    },
+    {
+      id: 'q_seed_4',
+      title: 'How to center a div horizontally and vertically using modern pure CSS?',
+      author: 'Priya Sharma',
+      authorRole: 'UI/UX Developer',
+      avatarInitial: 'P',
+      category: 'frontend',
+      categoryLabel: 'Frontend (HTML/CSS/JS)',
+      tags: ['css', 'flexbox', 'centering', 'layouts'],
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 26).toISOString(),
+      views: 610,
+      upvotes: 52,
+      downvotes: 0,
+      isAnswered: true,
+      questionBody: 'What is the cleanest modern CSS way to center a container both vertically and horizontally across all browser sizes without hacky absolute coordinates?',
+      codeSnippet: `<div class="parent">\n  <div class="child">Centered Content</div>\n</div>`,
+      snippetLang: 'html',
+      answer: {
+        summary: 'Use Flexbox with `justify-content: center` and `align-items: center`, or CSS Grid with `place-items: center`.',
+        explanation: 'Both methods are fully responsive and supported in all modern browsers without requiring fixed margins or pixel coordinates.',
+        solutionCode: `/* Method A: CSS Flexbox */\n.parent-flex {\n  display: flex;\n  justify-content: center; /* Horizontal */\n  align-items: center;     /* Vertical */\n  min-height: 100vh;\n}\n\n/* Method B: CSS Grid (Shortest) */\n.parent-grid {\n  display: grid;\n  place-items: center;\n  min-height: 100vh;\n}`,
+        solutionLang: 'css',
+        engineLabel: 'MiniAsk Heuristic Engine (Offline Rule Matcher)',
+        answeredAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString()
+      }
+    },
+    {
+      id: 'q_seed_5',
+      title: 'How to run local LLMs with Ollama for offline privacy-first Q&A?',
+      author: 'David Kim',
+      authorRole: 'DevOps Engineer',
+      avatarInitial: 'D',
+      category: 'security',
+      categoryLabel: 'Security & Privacy',
+      tags: ['ollama', 'local-llm', 'privacy', 'offline'],
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 38).toISOString(),
+      views: 298,
+      upvotes: 39,
+      downvotes: 1,
+      isAnswered: true,
+      questionBody: 'How do I run a local model like Llama 3 via Ollama so that MiniAsk can query it without sending any packets to third-party cloud servers?',
+      codeSnippet: `# Terminal command:\nollama pull llama3\nollama serve`,
+      snippetLang: 'bash',
+      answer: {
+        summary: 'Install Ollama locally, pull your chosen open-weights model, and query Ollama at http://localhost:11434/api/generate.',
+        explanation: 'Ollama runs entirely on your local machine using your GPU/CPU. When MiniAsk targets `http://localhost:11434`, zero tokens are sent across the public internet, ensuring total privacy.',
+        solutionCode: `# 1. Pull and test the model in terminal\nollama run llama3:latest\n\n# 2. Ollama native REST API endpoint:\n# POST http://localhost:11434/api/chat\n# {\n#   "model": "llama3",\n#   "messages": [{ "role": "user", "content": "Hello" }]\n# }`,
+        solutionLang: 'bash',
+        engineLabel: 'MiniAsk Heuristic Engine (Offline Rule Matcher)',
+        answeredAt: new Date(Date.now() - 1000 * 60 * 60 * 35).toISOString()
+      }
+    },
+    {
+      id: 'q_seed_6',
+      title: 'Handling SQLite "Database is locked" error under concurrent read/writes',
+      author: 'Sarah Jenkins',
+      authorRole: 'Backend Engineer',
+      avatarInitial: 'S',
+      category: 'backend',
+      categoryLabel: 'Backend & APIs',
+      tags: ['sqlite', 'database', 'concurrency', 'wal-mode'],
+      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 50).toISOString(),
+      views: 184,
+      upvotes: 21,
+      downvotes: 0,
+      isAnswered: true,
+      questionBody: 'Under moderate load, our local SQLite database throws: sqlite3.OperationalError: database is locked. How can we enable concurrent reads during writes?',
+      codeSnippet: `import sqlite3\nconn = sqlite3.connect('app.db')\n# Throws database locked on parallel writes`,
+      snippetLang: 'python',
+      answer: {
+        summary: 'Enable SQLite Write-Ahead Logging (WAL) mode and configure a busy timeout.',
+        explanation: 'By default, SQLite uses rollback journal mode which locks the whole database during writes. In WAL mode, readers do not block writers and writers do not block readers.',
+        solutionCode: `import sqlite3\n\nconn = sqlite3.connect('app.db', timeout=10.0)\n# Enable Write-Ahead Logging (WAL)\nconn.execute('PRAGMA journal_mode=WAL;')\n# Enable busy timeout (5000 milliseconds)\nconn.execute('PRAGMA busy_timeout = 5000;')`,
+        solutionLang: 'python',
+        engineLabel: 'MiniAsk Heuristic Engine (Offline Rule Matcher)',
+        answeredAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString()
+      }
+    }
+  ];
+
+  const TRENDING_SUGGESTIONS = [
+    {
+      label: 'TypeError: unsupported operand += (int, str)',
+      query: 'Why do I get TypeError: unsupported operand type(s) for +=: \'int\' and \'str\' in Python?',
+      category: 'python'
+    },
+    {
+      label: 'How MiniAsk protects private API tokens',
+      query: 'How does MiniAsk protect private data and tokens before asking AI?',
+      category: 'security'
+    },
+    {
+      label: 'Fix CORS error in web applications',
+      query: 'How to fix CORS errors when calling local APIs from browser frontend?',
+      category: 'frontend'
+    },
+    {
+      label: 'Center a div horizontally and vertically',
+      query: 'How to center a div horizontally and vertically using pure CSS?',
+      category: 'frontend'
+    },
+    {
+      label: 'Run Ollama locally for 100% offline Q&A',
+      query: 'How to run local LLMs with Ollama for offline privacy-first Q&A?',
+      category: 'security'
+    },
+    {
+      label: 'SQLite database is locked fix (WAL mode)',
+      query: 'Handling SQLite Database is locked error under concurrent read/writes',
+      category: 'backend'
+    }
+  ];
+
+  const CATEGORIES = [
+    { id: 'all', label: 'All Categories', icon: '✦' },
+    { id: 'frontend', label: 'Frontend', icon: '🎨' },
+    { id: 'backend', label: 'Backend & APIs', icon: '⚡' },
+    { id: 'security', label: 'Security & Privacy', icon: '🛡️' },
+    { id: 'python', label: 'Python & Data', icon: '🐍' },
+    { id: 'desktop', label: 'Windows & Desktop', icon: '💻' }
+  ];
+
+  /**
+   * Extensible Demo Answer Engine (Heuristic Rule Matcher)
+   * Deterministic client-side analysis. No external AI APIs or cloud models are called.
+   */
+  const MiniAskQuestions = {
+    getCategories() {
+      return CATEGORIES;
+    },
+
+    getTrending() {
+      return TRENDING_SUGGESTIONS;
+    },
+
+    getDefaultSeeds() {
+      return JSON.parse(JSON.stringify(SEED_QUESTIONS));
+    },
+
+    /**
+     * Generate an answer using pure client-side heuristic pattern matching.
+     * @param {string} rawPrompt
+     * @param {string} [preferredCategory]
+     * @returns {Promise<Object>}
+     */
+    async generateDemoAnswer(rawPrompt, preferredCategory = 'all') {
+      const prompt = (rawPrompt || '').toLowerCase();
+
+      // Heuristic Rule 1: Python TypeError scenario
+      if (prompt.includes('typeerror') || (prompt.includes('int') && prompt.includes('str')) || prompt.includes('unsupported operand')) {
+        return {
+          title: rawPrompt,
+          category: 'python',
+          categoryLabel: 'Python & APIs',
+          summary: 'Type mismatch in arithmetic operation: Python cannot add a string to a numeric integer without explicit casting.',
+          explanation: 'When parsing data from JSON, HTTP bodies, or user input, numbers often retain string formatting. Because Python does not perform implicit string coercion in arithmetic expressions, `int + str` results in a fatal `TypeError`.',
+          codeSnippet: `# Heuristic Solution:\ndef sanitize_and_add(base_num, new_val):\n    try:\n        return base_num + float(new_val)\n    except (ValueError, TypeError):\n        return base_num`,
+          codeLang: 'python',
+          engineLabel: 'MiniAsk Heuristic Engine • Python Ruleset (Client-Side)'
+        };
+      }
+
+      // Heuristic Rule 2: Privacy / Redaction / Token protection
+      if (prompt.includes('privacy') || prompt.includes('redact') || prompt.includes('token') || prompt.includes('secret') || prompt.includes('password')) {
+        return {
+          title: rawPrompt,
+          category: 'security',
+          categoryLabel: 'Security & Privacy',
+          summary: 'MiniAsk privacy architecture: Explicit-only capture, native client redaction, and user preview approval.',
+          explanation: 'MiniAsk maintains zero continuous background monitoring. When triggered by the user, local heuristics inspect memory buffers for API keys, bearer tokens, passwords, and PII, masking them into safe tokens before any network call occurs.',
+          codeSnippet: `// Client-side Sanitization Pattern:\nconst SENSITIVE_PATTERNS = [\n  { name: 'API_KEY', regex: /sk-[a-zA-Z0-9]{24,}/g },\n  { name: 'TOKEN', regex: /bearer\\s+[a-zA-Z0-9_-]+/gi }\n];`,
+          codeLang: 'javascript',
+          engineLabel: 'MiniAsk Heuristic Engine • Security Ruleset (Client-Side)'
+        };
+      }
+
+      // Heuristic Rule 3: CORS error
+      if (prompt.includes('cors') || prompt.includes('access-control') || prompt.includes('origin')) {
+        return {
+          title: rawPrompt,
+          category: 'frontend',
+          categoryLabel: 'Frontend (HTML/CSS/JS)',
+          summary: 'Cross-Origin Resource Sharing (CORS) restriction enforced by browser security policy.',
+          explanation: 'Browsers block client-side fetch requests when the server domain or port differs from the frontend origin, unless the server explicitly sends `Access-Control-Allow-Origin: *` or specifies the exact allowed origin in HTTP response headers.',
+          codeSnippet: `// Server response header required:\n// Access-Control-Allow-Origin: *\n// Access-Control-Allow-Methods: GET, POST, OPTIONS\n// Access-Control-Allow-Headers: Content-Type, Authorization`,
+          codeLang: 'http',
+          engineLabel: 'MiniAsk Heuristic Engine • Web Standards Ruleset (Client-Side)'
+        };
+      }
+
+      // Heuristic Rule 4: CSS Centering
+      if (prompt.includes('center') || prompt.includes('centering') || prompt.includes('flexbox') || prompt.includes('div')) {
+        return {
+          title: rawPrompt,
+          category: 'frontend',
+          categoryLabel: 'Frontend (HTML/CSS/JS)',
+          summary: 'Modern CSS layout standard: Center any element using Flexbox or CSS Grid.',
+          explanation: 'Modern browser layouts avoid absolute position offsets. Flexbox provides flexible bidirectional alignment with `justify-content` and `align-items`, while Grid provides concise single-property alignment with `place-items: center`.',
+          codeSnippet: `.centered-container {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  min-height: 100vh;\n  width: 100%;\n}`,
+          codeLang: 'css',
+          engineLabel: 'MiniAsk Heuristic Engine • CSS Layout Ruleset (Client-Side)'
+        };
+      }
+
+      // Heuristic Rule 5: Local Ollama / Offline LLM
+      if (prompt.includes('ollama') || prompt.includes('local llm') || prompt.includes('offline') || prompt.includes('llama')) {
+        return {
+          title: rawPrompt,
+          category: 'security',
+          categoryLabel: 'Security & Privacy',
+          summary: 'Local LLM orchestration via Ollama: zero external cloud dependencies.',
+          explanation: 'Running Ollama on `localhost:11434` creates a local REST server. Developers can send prompts to local neural weights without transmitting code or proprietary context over external networks.',
+          codeSnippet: `# Test local Ollama connection in terminal:\ncurl http://localhost:11434/api/generate -d '{\n  "model": "llama3",\n  "prompt": "Explain local AI privacy",\n  "stream": false\n}'`,
+          codeLang: 'bash',
+          engineLabel: 'MiniAsk Heuristic Engine • Offline LLM Ruleset (Client-Side)'
+        };
+      }
+
+      // Heuristic Rule 6: SQLite lock
+      if (prompt.includes('sqlite') || prompt.includes('lock') || prompt.includes('database is locked')) {
+        return {
+          title: rawPrompt,
+          category: 'backend',
+          categoryLabel: 'Backend & APIs',
+          summary: 'SQLite lock contention resolution: Enable WAL mode and configure connection timeouts.',
+          explanation: 'SQLite default locking blocks reading threads during write commits. Switching to Write-Ahead Logging (WAL) decouples concurrent readers from writers.',
+          codeSnippet: `-- Execute PRAGMA commands on database connection:\nPRAGMA journal_mode=WAL;\nPRAGMA busy_timeout = 5000;\nPRAGMA synchronous = NORMAL;`,
+          codeLang: 'sql',
+          engineLabel: 'MiniAsk Heuristic Engine • SQLite Ruleset (Client-Side)'
+        };
+      }
+
+      // Heuristic Rule 7: LocalStorage / Storage
+      if (prompt.includes('localstorage') || prompt.includes('sessionstorage') || prompt.includes('storage') || prompt.includes('cache')) {
+        return {
+          title: rawPrompt,
+          category: 'frontend',
+          categoryLabel: 'Frontend (HTML/CSS/JS)',
+          summary: 'Browser client-side storage architecture: LocalStorage vs SessionStorage.',
+          explanation: 'LocalStorage persists across browser restarts for domain origins (typically ~5MB limit). SessionStorage expires when the tab closes. All LocalStorage calls are synchronous and store string key-value pairs.',
+          codeSnippet: `// Safe LocalStorage Helper Example:\nfunction saveItem(key, data) {\n  try {\n    localStorage.setItem(key, JSON.stringify(data));\n  } catch (err) {\n    console.error('Storage quota exceeded or disabled', err);\n  }\n}`,
+          codeLang: 'javascript',
+          engineLabel: 'MiniAsk Heuristic Engine • Browser Storage Ruleset (Client-Side)'
+        };
+      }
+
+      // Generic Heuristic Rule: Structured synthesis for arbitrary queries
+      const chosenCategory = preferredCategory !== 'all' ? preferredCategory : 'frontend';
+      const catMap = {
+        frontend: 'Frontend (HTML/CSS/JS)',
+        backend: 'Backend & APIs',
+        security: 'Security & Privacy',
+        python: 'Python & Data',
+        desktop: 'Windows & Desktop'
+      };
+
+      return {
+        title: rawPrompt,
+        category: chosenCategory,
+        categoryLabel: catMap[chosenCategory] || 'Developer Q&A',
+        summary: `Diagnosis & heuristic evaluation for "${window.MiniAskUtils ? window.MiniAskUtils.truncate(rawPrompt, 65) : rawPrompt.slice(0, 65)}"`,
+        explanation: `This response was generated by the MiniAsk Demo Heuristic Engine running locally in your browser. Heuristic pattern evaluation inspected the keywords in your query to formulate an offline guideline. For full offline customization, you can extend rule definitions directly inside frontend/js/questions.js.`,
+        codeSnippet: `// Heuristic template pattern for: ${rawPrompt.replace(/[^\w\s-]/g, '')}\nfunction handleQueryResolution() {\n  const status = "resolved";\n  console.log("Validated client-side without external cloud dependencies");\n  return { status, timestamp: Date.now() };\n}`,
+        codeLang: 'javascript',
+        engineLabel: 'MiniAsk Demo Heuristic Engine (Offline Client Rule Evaluation)'
+      };
+    }
+  };
+
+  window.MiniAskQuestions = MiniAskQuestions;
+})(window);
+
+      /**
+ * MiniAsk — Main Application Controller
+ * Handles UI interactions, rendering, filtering, sorting, theme switching,
+ * voting, bookmarks, and form validation using pure Vanilla JavaScript.
+ */
+
+(function (window, document) {
+  'use strict';
+
+  // Application State
+  const state = {
+    currentCategory: 'all',
+    searchQuery: '',
+    sortBy: 'recent', // 'recent' | 'upvotes' | 'views'
+    bookmarksOnly: false,
+    expandedCardIds: new Set(),
+    isGeneratingAnswer: false,
+    generatedAnswer: null
+  };
+
+  // DOM Elements Cache
+  let elements = {};
+
+  /**
+   * Initialize DOM References
+   */
+  function cacheElements() {
+    elements = {
+      html: document.documentElement,
+      themeToggleBtn: document.getElementById('theme-toggle-btn'),
+      themeIcon: document.getElementById('theme-icon'),
+      themeLabel: document.getElementById('theme-label'),
+      mobileMenuBtn: document.getElementById('mobile-menu-btn'),
+      navMenu: document.getElementById('nav-menu'),
+      bookmarksBadge: document.getElementById('header-bookmarks-badge'),
+      headerBookmarksLink: document.getElementById('nav-bookmarks-link'),
+
+      // Ask Box & Answer Engine
+      askForm: document.getElementById('ask-form'),
+      askInput: document.getElementById('ask-input'),
+      askCategorySelect: document.getElementById('ask-category-select'),
+      askSubmitBtn: document.getElementById('ask-submit-btn'),
+      askSpinner: document.getElementById('ask-spinner'),
+      askBtnText: document.getElementById('ask-btn-text'),
+      answerResultCard: document.getElementById('answer-result-card'),
+      answerResultContent: document.getElementById('answer-result-content'),
+      publishToFeedBtn: document.getElementById('publish-to-feed-btn'),
+      dismissAnswerBtn: document.getElementById('dismiss-answer-btn'),
+      trendingChipsContainer: document.getElementById('trending-chips-container'),
+
+      // Feed Controls & Container
+      categoryPillsContainer: document.getElementById('category-pills-container'),
+      searchInput: document.getElementById('search-input'),
+      sortSelect: document.getElementById('sort-select'),
+      bookmarksFilterToggle: document.getElementById('bookmarks-filter-toggle'),
+      questionsListContainer: document.getElementById('questions-list-container'),
+      feedCountBadge: document.getElementById('feed-count-badge'),
+      emptyStateContainer: document.getElementById('empty-state-container'),
+      clearFiltersBtn: document.getElementById('clear-filters-btn'),
+
+      // Feedback Form
+      feedbackForm: document.getElementById('feedback-form'),
+      fbNameInput: document.getElementById('fb-name'),
+      fbEmailInput: document.getElementById('fb-email'),
+      fbCategorySelect: document.getElementById('fb-category'),
+      fbMessageInput: document.getElementById('fb-message'),
+      fbSuccessNotice: document.getElementById('feedback-success-notice'),
+
+      // Reset Demo Data
+      resetDataBtn: document.getElementById('reset-demo-data-btn')
+    };
+  }
+
+  /**
+   * Initialize Seed Data if first run
+   */
+  function initData() {
+    const existing = window.MiniAskStorage.getQuestions();
+    if (!existing || existing.length === 0) {
+      const defaultSeeds = window.MiniAskQuestions.getDefaultSeeds();
+      window.MiniAskStorage.saveQuestions(defaultSeeds);
+    }
+  }
+
+  /**
+   * Theme Controller
+   */
+  function initTheme() {
+    const savedTheme = window.MiniAskStorage.getTheme();
+    applyTheme(savedTheme, false);
+
+    if (elements.themeToggleBtn) {
+      elements.themeToggleBtn.addEventListener('click', () => {
+        const current = elements.html.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        applyTheme(next, true);
+      });
+    }
+  }
+
+  function applyTheme(theme, showNotification = false) {
+    elements.html.setAttribute('data-theme', theme);
+    window.MiniAskStorage.setTheme(theme);
+
+    if (elements.themeIcon && elements.themeLabel) {
+      if (theme === 'dark') {
+        elements.themeIcon.textContent = '🌙';
+        elements.themeLabel.textContent = 'Dark';
+      } else {
+        elements.themeIcon.textContent = '☀️';
+        elements.themeLabel.textContent = 'Light';
+      }
+    }
+
+    if (showNotification) {
+      window.MiniAskUtils.showToast(
+        `Switched to ${theme === 'dark' ? 'Dark' : 'Light'} theme`,
+        'info',
+        2000
+      );
+    }
+  }
+
+  /**
+   * Update Bookmarks Badge count across the interface
+   */
+  function updateBookmarksCounter() {
+    const bookmarks = window.MiniAskStorage.getBookmarks();
+    const count = bookmarks.length;
+    if (elements.bookmarksBadge) {
+      elements.bookmarksBadge.textContent = count;
+      elements.bookmarksBadge.style.display = count > 0 ? 'inline-flex' : 'none';
+    }
+  }
+
+  /**
+   * Render Category Filter Pills
+   */
+  function renderCategoryPills() {
+    if (!elements.categoryPillsContainer) return;
+    const categories = window.MiniAskQuestions.getCategories();
+
+    elements.categoryPillsContainer.innerHTML = categories
+      .map(
+        (cat) => `
+        <button 
+          type="button" 
+          class="category-pill ${state.currentCategory === cat.id ? 'active' : ''}" 
+          data-cat-id="${cat.id}"
+          role="tab"
+          aria-selected="${state.currentCategory === cat.id}">
+          <span class="pill-icon">${cat.icon}</span>
+          <span>${cat.label}</span>
+        </button>
+      `
+      )
+      .join('');
+
+    elements.categoryPillsContainer.querySelectorAll('.category-pill').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const targetBtn = e.currentTarget;
+        const catId = targetBtn.getAttribute('data-cat-id');
+        setCategoryFilter(catId);
+      });
+    });
+  }
+
+  function setCategoryFilter(catId) {
+    state.currentCategory = catId;
+    elements.categoryPillsContainer.querySelectorAll('.category-pill').forEach((btn) => {
+      const isSelected = btn.getAttribute('data-cat-id') === catId;
+      btn.classList.toggle('active', isSelected);
+      btn.setAttribute('aria-selected', isSelected);
+    });
+    renderQuestionsList();
+  }
+
+  /**
+   * Render Trending Chips
+   */
+  function renderTrendingChips() {
+    if (!elements.trendingChipsContainer) return;
+    const trending = window.MiniAskQuestions.getTrending();
+
+    elements.trendingChipsContainer.innerHTML = trending
+      .map(
+        (t) => `
+        <button type="button" class="trending-chip" data-query="${window.MiniAskUtils.escapeHTML(t.query)}" data-cat="${t.category}">
+          <span class="chip-trend-icon">⚡</span>
+          <span>${window.MiniAskUtils.escapeHTML(t.label)}</span>
+        </button>
+      `
+      )
+      .join('');
+
+    elements.trendingChipsContainer.querySelectorAll('.trending-chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const query = chip.getAttribute('data-query');
+        const cat = chip.getAttribute('data-cat');
+        if (elements.askInput) {
+          elements.askInput.value = query;
+          if (elements.askCategorySelect && cat) {
+            elements.askCategorySelect.value = cat;
+          }
+          elements.askInput.focus();
+          // Smooth scroll to the ask box
+          document.getElementById('ask-section')?.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  /**
+   * Filter and Sort questions
+   */
+  function getFilteredAndSortedQuestions() {
+    let questions = window.MiniAskStorage.getQuestions() || [];
+    const bookmarks = window.MiniAskStorage.getBookmarks();
+
+    // 1. Filter by Category
+    if (state.currentCategory !== 'all') {
+      questions = questions.filter((q) => q.category === state.currentCategory);
+    }
+
+    // 2. Filter by Search Query
+    if (state.searchQuery.trim()) {
+      const qLower = state.searchQuery.toLowerCase();
+      questions = questions.filter((item) => {
+        const matchTitle = item.title && item.title.toLowerCase().includes(qLower);
+        const matchBody = item.questionBody && item.questionBody.toLowerCase().includes(qLower);
+        const matchTags = Array.isArray(item.tags) && item.tags.some((t) => t.toLowerCase().includes(qLower));
+        const matchAnswer = item.answer && (
+          (item.answer.summary && item.answer.summary.toLowerCase().includes(qLower)) ||
+          (item.answer.explanation && item.answer.explanation.toLowerCase().includes(qLower))
+        );
+        return matchTitle || matchBody || matchTags || matchAnswer;
+      });
+    }
+
+    // 3. Filter by Bookmarks Only
+    if (state.bookmarksOnly) {
+      questions = questions.filter((item) => bookmarks.includes(item.id));
+    }
+
+    // 4. Sort
+    questions.sort((a, b) => {
+      if (state.sortBy === 'upvotes') {
+        return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
+      }
+      if (state.sortBy === 'views') {
+        return (b.views || 0) - (a.views || 0);
+      }
+      // default: recent
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+
+    return questions;
+  }
+
+  /**
+   * Render Question Feed Cards
+   */
+  function renderQuestionsList() {
+    if (!elements.questionsListContainer) return;
+    const questions = getFilteredAndSortedQuestions();
+
+    if (elements.feedCountBadge) {
+      elements.feedCountBadge.textContent = `${questions.length} Question${questions.length === 1 ? '' : 's'}`;
+    }
+
+    if (questions.length === 0) {
+      elements.questionsListContainer.innerHTML = '';
+      elements.emptyStateContainer.style.display = 'block';
+      return;
+    }
+
+    elements.emptyStateContainer.style.display = 'none';
+
+    elements.questionsListContainer.innerHTML = questions
+      .map((q) => renderQuestionCardHTML(q))
+      .join('');
+
+    // Attach listeners on newly rendered cards
+    attachCardEventListeners();
+  }
+
+  /**
+   * Generate Question Card HTML
+   */
+  function renderQuestionCardHTML(q) {
+    const isBookmarked = window.MiniAskStorage.isBookmarked(q.id);
+    const userVote = window.MiniAskStorage.getUserVote(q.id);
+    const isExpanded = state.expandedCardIds.has(q.id);
+    const score = (q.upvotes || 0) - (q.downvotes || 0);
+    const relativeTime = window.MiniAskUtils.formatRelativeTime(q.createdAt);
+
+    return `
+      <article class="question-card" id="card-${q.id}" data-id="${q.id}">
+        <!-- Card Header -->
+        <header class="card-header">
+          <div class="author-info">
+            <div class="author-avatar" aria-hidden="true">${window.MiniAskUtils.escapeHTML(q.avatarInitial || 'U')}</div>
+            <div class="author-meta">
+              <span class="author-name">${window.MiniAskUtils.escapeHTML(q.author || 'Anonymous')}</span>
+              <span class="author-role">${window.MiniAskUtils.escapeHTML(q.authorRole || 'Developer')}</span>
+            </div>
+          </div>
+          <div class="card-meta-right">
+            <span class="category-badge cat-${q.category || 'general'}">${window.MiniAskUtils.escapeHTML(q.categoryLabel || q.category || 'General')}</span>
+            <time class="card-time" datetime="${q.createdAt}">${relativeTime}</time>
+            <button 
+              type="button" 
+              class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" 
+              data-id="${q.id}" 
+              aria-label="${isBookmarked ? 'Remove from bookmarks' : 'Save to bookmarks'}"
+              title="${isBookmarked ? 'Remove bookmark' : 'Bookmark question'}">
+              <span class="bookmark-icon">${isBookmarked ? '★' : '☆'}</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Question Title & Body -->
+        <div class="card-body">
+          <h3 class="card-title">${window.MiniAskUtils.escapeHTML(q.title)}</h3>
+          <p class="card-question-text">${window.MiniAskUtils.escapeHTML(q.questionBody)}</p>
+
+          ${
+            q.codeSnippet
+              ? window.MiniAskUtils.renderCodeBlock(q.codeSnippet, q.snippetLang || 'code')
+              : ''
+          }
+
+          ${
+            Array.isArray(q.tags) && q.tags.length > 0
+              ? `<div class="card-tags-list">
+                  ${q.tags.map((t) => `<span class="tag-pill">#${window.MiniAskUtils.escapeHTML(t)}</span>`).join('')}
+                </div>`
+              : ''
+          }
+        </div>
+
+        <!-- Expandable Answer Section -->
+        <section 
+          class="card-answer-section ${isExpanded ? 'is-expanded' : 'is-collapsed'}" 
+          id="answer-panel-${q.id}" 
+          aria-hidden="${!isExpanded}">
+          ${
+            q.answer
+              ? `
+              <div class="answer-wrapper">
+                <div class="answer-header">
+                  <div class="engine-badge">
+                    <span class="badge-icon">⚡</span>
+                    <span class="badge-text">${window.MiniAskUtils.escapeHTML(q.answer.engineLabel || 'Demo Heuristic Engine')}</span>
+                  </div>
+                  <span class="answer-date">${window.MiniAskUtils.formatRelativeTime(q.answer.answeredAt)}</span>
+                </div>
+
+                <div class="answer-content">
+                  <h4 class="answer-summary">${window.MiniAskUtils.escapeHTML(q.answer.summary)}</h4>
+                  <p class="answer-explanation">${window.MiniAskUtils.escapeHTML(q.answer.explanation)}</p>
+                  ${
+                    q.answer.solutionCode
+                      ? window.MiniAskUtils.renderCodeBlock(
+                          q.answer.solutionCode,
+                          q.answer.solutionLang || 'python'
+                        )
+                      : ''
+                  }
+                </div>
+              </div>
+            `
+              : `<div class="no-answer-notice">No verified answer recorded yet.</div>`
+          }
+        </section>
+
+        <!-- Card Footer Actions -->
+        <footer class="card-footer">
+          <div class="vote-controls" role="group" aria-label="Vote on question">
+            <button 
+              type="button" 
+              class="vote-btn upvote-btn ${userVote === 1 ? 'active' : ''}" 
+              data-id="${q.id}" 
+              data-dir="1" 
+              aria-label="Upvote question"
+              title="Upvote">
+              <span class="vote-arrow">▲</span>
+            </button>
+            <span class="vote-score" id="score-${q.id}" aria-label="${score} net votes">${score}</span>
+            <button 
+              type="button" 
+              class="vote-btn downvote-btn ${userVote === -1 ? 'active' : ''}" 
+              data-id="${q.id}" 
+              data-dir="-1" 
+              aria-label="Downvote question"
+              title="Downvote">
+              <span class="vote-arrow">▼</span>
+            </button>
+          </div>
+
+          <div class="footer-stats">
+            <span class="stat-item" title="${q.views || 0} Views">
+              <span class="stat-icon">👁</span> ${q.views || 0}
+            </span>
+            <button 
+              type="button" 
+              class="share-card-btn" 
+              data-id="${q.id}"
+              data-title="${window.MiniAskUtils.escapeHTML(q.title)}"
+              title="Copy question link">
+              <span class="share-icon">🔗</span> Share
+            </button>
+          </div>
+
+          <button 
+            type="button" 
+            class="expand-toggle-btn" 
+            data-id="${q.id}" 
+            aria-expanded="${isExpanded}" 
+            aria-controls="answer-panel-${q.id}">
+            <span class="expand-text">${isExpanded ? 'Hide Answer' : 'Show Answer'}</span>
+            <span class="expand-icon">${isExpanded ? '▲' : '▼'}</span>
+          </button>
+        </footer>
+      </article>
+    `;
+  }
+
+  /**
+   * Attach Listeners for dynamically rendered cards
+   */
+  function attachCardEventListeners() {
+    // 1. Expand / Collapse Button
+    elements.questionsListContainer.querySelectorAll('.expand-toggle-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const qId = btn.getAttribute('data-id');
+        const answerPanel = document.getElementById(`answer-panel-${qId}`);
+        const expandText = btn.querySelector('.expand-text');
+        const expandIcon = btn.querySelector('.expand-icon');
+
+        if (state.expandedCardIds.has(qId)) {
+          state.expandedCardIds.delete(qId);
+          answerPanel.classList.remove('is-expanded');
+          answerPanel.classList.add('is-collapsed');
+          btn.setAttribute('aria-expanded', 'false');
+          expandText.textContent = 'Show Answer';
+          expandIcon.textContent = '▼';
+        } else {
+          state.expandedCardIds.add(qId);
+          answerPanel.classList.remove('is-collapsed');
+          answerPanel.classList.add('is-expanded');
+          btn.setAttribute('aria-expanded', 'true');
+          expandText.textContent = 'Hide Answer';
+          expandIcon.textContent = '▲';
+        }
+      });
+    });
+
+    // 2. Bookmark Toggle Button
+    elements.questionsListContainer.querySelectorAll('.bookmark-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const qId = btn.getAttribute('data-id');
+        const result = window.MiniAskStorage.toggleBookmark(qId);
+        btn.classList.toggle('bookmarked', result.isBookmarked);
+        btn.querySelector('.bookmark-icon').textContent = result.isBookmarked ? '★' : '☆';
+        btn.setAttribute(
+          'aria-label',
+          result.isBookmarked ? 'Remove from bookmarks' : 'Save to bookmarks'
+        );
+
+        updateBookmarksCounter();
+        window.MiniAskUtils.showToast(
+          result.isBookmarked ? 'Question saved to Bookmarks' : 'Removed from Bookmarks',
+          result.isBookmarked ? 'success' : 'info',
+          2000
+        );
+
+        // If currently viewing bookmarks-only feed, re-render
+        if (state.bookmarksOnly) {
+          renderQuestionsList();
+        }
+      });
+    });
+
+    // 3. Upvote / Downvote Buttons
+    elements.questionsListContainer.querySelectorAll('.vote-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const qId = btn.getAttribute('data-id');
+        const dir = parseInt(btn.getAttribute('data-dir'), 10);
+        const { newVote, delta } = window.MiniAskStorage.recordVote(qId, dir);
+
+        const card = document.getElementById(`card-${qId}`);
+        const upBtn = card.querySelector('.upvote-btn');
+        const downBtn = card.querySelector('.downvote-btn');
+        const scoreSpan = card.querySelector('.vote-score');
+
+        upBtn.classList.toggle('active', newVote === 1);
+        downBtn.classList.toggle('active', newVote === -1);
+
+        // Update score in storage and DOM
+        const questions = window.MiniAskStorage.getQuestions();
+        const question = questions.find((q) => q.id === qId);
+        if (question) {
+          if (dir === 1) {
+            question.upvotes = (question.upvotes || 0) + delta;
+          } else {
+            question.downvotes = (question.downvotes || 0) - delta;
+          }
+          window.MiniAskStorage.updateQuestion(qId, {
+            upvotes: question.upvotes,
+            downvotes: question.downvotes
+          });
+          const newScore = (question.upvotes || 0) - (question.downvotes || 0);
+          scoreSpan.textContent = newScore;
+          scoreSpan.classList.add('vote-bump');
+          setTimeout(() => scoreSpan.classList.remove('vote-bump'), 300);
+        }
+      });
+    });
+
+    // 4. Share Card Button
+    elements.questionsListContainer.querySelectorAll('.share-card-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const qId = btn.getAttribute('data-id');
+        const title = btn.getAttribute('data-title');
+        const url = `${window.location.origin}${window.location.pathname}#card-${qId}`;
+        const copyText = `${title}\n${url}`;
+
+        const ok = await window.MiniAskUtils.copyToClipboard(copyText);
+        window.MiniAskUtils.showToast(
+          ok ? 'Link and title copied to clipboard!' : 'Could not access clipboard',
+          ok ? 'success' : 'error',
+          2500
+        );
+      });
+    });
+
+    // 5. Code Block Copy Buttons
+    elements.questionsListContainer.querySelectorAll('.copy-code-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const pre = btn.closest('.code-block-wrapper').querySelector('pre code');
+        if (!pre) return;
+        const codeText = pre.innerText || pre.textContent;
+        const ok = await window.MiniAskUtils.copyToClipboard(codeText);
+
+        const textSpan = btn.querySelector('.copy-btn-text');
+        const oldText = textSpan.textContent;
+        if (ok) {
+          textSpan.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            textSpan.textContent = oldText;
+            btn.classList.remove('copied');
+          }, 2000);
+        }
+      });
+    });
+  }
+
+  /**
+   * Handle Question Submission & Demo Answer Generation
+   */
+  function initAskSection() {
+    if (!elements.askForm) return;
+
+    elements.askForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const questionText = elements.askInput.value.trim();
+      const category = elements.askCategorySelect.value;
+
+      if (!questionText) {
+        window.MiniAskUtils.showToast('Please type a question or error message', 'warning', 2500);
+        elements.askInput.focus();
+        return;
+      }
+
+      setAnswerLoading(true);
+
+      try {
+        // Simulate local heuristic evaluation delay for micro-animation wow factor
+        await new Promise((res) => setTimeout(res, 650));
+
+        const result = await window.MiniAskQuestions.generateDemoAnswer(questionText, category);
+        state.generatedAnswer = {
+          ...result,
+          originalQuestion: questionText,
+          category: category !== 'all' ? category : result.category,
+          timestamp: new Date().toISOString()
+        };
+
+        renderGeneratedAnswer(state.generatedAnswer);
+        window.MiniAskUtils.showToast('Heuristic answer generated successfully!', 'success', 2500);
+      } catch (err) {
+        window.MiniAskUtils.showToast('Error formulating demo answer', 'error', 3000);
+      } finally {
+        setAnswerLoading(false);
+      }
+    });
+
+    // Publish to feed button
+    if (elements.publishToFeedBtn) {
+      elements.publishToFeedBtn.addEventListener('click', () => {
+        if (!state.generatedAnswer) return;
+
+        const gen = state.generatedAnswer;
+        const newQuestion = {
+          id: window.MiniAskUtils.generateId('user_q'),
+          title: gen.originalQuestion,
+          author: 'You',
+          authorRole: 'Community Member',
+          avatarInitial: 'Y',
+          category: gen.category,
+          categoryLabel: gen.categoryLabel,
+          tags: [gen.category, 'community-demo'],
+          createdAt: new Date().toISOString(),
+          views: 1,
+          upvotes: 1,
+          downvotes: 0,
+          isAnswered: true,
+          questionBody: gen.originalQuestion,
+          codeSnippet: '',
+          snippetLang: '',
+          answer: {
+            summary: gen.summary,
+            explanation: gen.explanation,
+            solutionCode: gen.codeSnippet ? gen.codeSnippet.replace(/# Heuristic Solution:|\/\/ Heuristic template pattern/g, '').trim() : '',
+            solutionLang: gen.codeLang || 'javascript',
+            engineLabel: gen.engineLabel,
+            answeredAt: new Date().toISOString()
+          }
+        };
+
+        window.MiniAskStorage.addQuestion(newQuestion);
+        state.expandedCardIds.add(newQuestion.id);
+
+        // Hide answer box & reset input
+        elements.answerResultCard.style.display = 'none';
+        elements.askInput.value = '';
+        state.generatedAnswer = null;
+
+        // Re-render feed and scroll to newly added item
+        renderQuestionsList();
+        const newCard = document.getElementById(`card-${newQuestion.id}`);
+        if (newCard) {
+          newCard.scrollIntoView({ behavior: 'smooth' });
+          newCard.classList.add('highlight-pulse');
+          setTimeout(() => newCard.classList.remove('highlight-pulse'), 1500);
+        }
+
+        window.MiniAskUtils.showToast('Question published to community feed!', 'success', 3000);
+      });
+    }
+
+    // Dismiss Answer Button
+    if (elements.dismissAnswerBtn) {
+      elements.dismissAnswerBtn.addEventListener('click', () => {
+        elements.answerResultCard.style.display = 'none';
+        state.generatedAnswer = null;
+      });
+    }
+  }
+
+  function setAnswerLoading(isLoading) {
+    state.isGeneratingAnswer = isLoading;
+    if (elements.askSubmitBtn) {
+      elements.askSubmitBtn.disabled = isLoading;
+    }
+    if (elements.askSpinner) {
+      elements.askSpinner.style.display = isLoading ? 'inline-block' : 'none';
+    }
+    if (elements.askBtnText) {
+      elements.askBtnText.textContent = isLoading ? 'Analyzing heuristics…' : 'Ask MiniAsk';
+    }
+  }
+
+  function renderGeneratedAnswer(ans) {
+    if (!elements.answerResultCard || !elements.answerResultContent) return;
+
+    elements.answerResultContent.innerHTML = `
+      <div class="result-notice-pill">
+        <span class="notice-icon">🛡️</span>
+        <span class="notice-text">Client-Side Demo Answer Engine (Offline heuristics • No third-party AI APIs called)</span>
+      </div>
+
+      <div class="result-body">
+        <h3 class="result-title">${window.MiniAskUtils.escapeHTML(ans.summary)}</h3>
+        <p class="result-text">${window.MiniAskUtils.escapeHTML(ans.explanation)}</p>
+        ${
+          ans.codeSnippet
+            ? window.MiniAskUtils.renderCodeBlock(ans.codeSnippet, ans.codeLang || 'code')
+            : ''
+        }
+      </div>
+    `;
+
+    // Attach copy button inside newly generated code block
+    elements.answerResultContent.querySelectorAll('.copy-code-btn').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const pre = btn.closest('.code-block-wrapper').querySelector('pre code');
+        if (!pre) return;
+        const codeText = pre.innerText || pre.textContent;
+        const ok = await window.MiniAskUtils.copyToClipboard(codeText);
+        const textSpan = btn.querySelector('.copy-btn-text');
+        if (ok) {
+          textSpan.textContent = 'Copied!';
+          setTimeout(() => (textSpan.textContent = 'Copy Code'), 2000);
+        }
+      });
+    });
+
+    elements.answerResultCard.style.display = 'block';
+    elements.answerResultCard.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /**
+   * Search, Sort, and Bookmark Filter Handlers
+   */
+  function initFeedControls() {
+    // Search input with debounce
+    if (elements.searchInput) {
+      elements.searchInput.addEventListener(
+        'input',
+        window.MiniAskUtils.debounce((e) => {
+          state.searchQuery = e.target.value;
+          renderQuestionsList();
+        }, 200)
+      );
+    }
+
+    // Sort Dropdown
+    if (elements.sortSelect) {
+      elements.sortSelect.addEventListener('change', (e) => {
+        state.sortBy = e.target.value;
+        renderQuestionsList();
+      });
+    }
+
+    // Bookmarks Filter Toggle
+    if (elements.bookmarksFilterToggle) {
+      elements.bookmarksFilterToggle.addEventListener('change', (e) => {
+        state.bookmarksOnly = e.target.checked;
+        renderQuestionsList();
+      });
+    }
+
+    // Header Bookmarks Link (click to jump to feed with bookmarks active)
+    if (elements.headerBookmarksLink) {
+      elements.headerBookmarksLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        state.bookmarksOnly = true;
+        if (elements.bookmarksFilterToggle) {
+          elements.bookmarksFilterToggle.checked = true;
+        }
+        renderQuestionsList();
+        document.getElementById('feed-section')?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    // Clear filters button in empty state
+    if (elements.clearFiltersBtn) {
+      elements.clearFiltersBtn.addEventListener('click', () => {
+        state.currentCategory = 'all';
+        state.searchQuery = '';
+        state.bookmarksOnly = false;
+        if (elements.searchInput) elements.searchInput.value = '';
+        if (elements.bookmarksFilterToggle) elements.bookmarksFilterToggle.checked = false;
+        renderCategoryPills();
+        renderQuestionsList();
+      });
+    }
+  }
+
+  /**
+   * Feedback and Contact Form Validation & Submission
+   */
+  function initFeedbackForm() {
+    if (!elements.feedbackForm) return;
+
+    elements.feedbackForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let isValid = true;
+      const name = elements.fbNameInput.value.trim();
+      const email = elements.fbEmailInput.value.trim();
+      const category = elements.fbCategorySelect.value;
+      const message = elements.fbMessageInput.value.trim();
+
+      // Reset previous error classes
+      [elements.fbNameInput, elements.fbEmailInput, elements.fbMessageInput].forEach((input) => {
+        input.classList.remove('input-error');
+        const errEl = document.getElementById(`${input.id}-error`);
+        if (errEl) errEl.textContent = '';
+      });
+
+      // Name validation
+      if (!name || name.length < 2) {
+        showFieldError(elements.fbNameInput, 'Please enter a valid name (at least 2 characters).');
+        isValid = false;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        showFieldError(elements.fbEmailInput, 'Please enter a valid email address.');
+        isValid = false;
+      }
+
+      // Message validation
+      if (!message || message.length < 10) {
+        showFieldError(elements.fbMessageInput, 'Message must be at least 10 characters.');
+        isValid = false;
+      }
+
+      if (!isValid) {
+        window.MiniAskUtils.showToast('Please fix the errors in the form', 'warning', 2500);
+        return;
+      }
+
+      // Save submission to LocalStorage
+      window.MiniAskStorage.saveFeedback({
+        name,
+        email,
+        category,
+        message
+      });
+
+      // Show success feedback
+      if (elements.fbSuccessNotice) {
+        elements.fbSuccessNotice.style.display = 'block';
+        setTimeout(() => {
+          elements.fbSuccessNotice.style.display = 'none';
+        }, 5000);
+      }
+
+      elements.feedbackForm.reset();
+      window.MiniAskUtils.showToast('Thank you! Your feedback has been saved locally.', 'success', 3500);
+    });
+  }
+
+  function showFieldError(inputEl, msg) {
+    inputEl.classList.add('input-error');
+    const errEl = document.getElementById(`${inputEl.id}-error`);
+    if (errEl) {
+      errEl.textContent = msg;
+    }
+  }
+
+  /**
+   * Mobile Hamburger Menu
+   */
+  function initMobileMenu() {
+    if (!elements.mobileMenuBtn || !elements.navMenu) return;
+
+    elements.mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = elements.navMenu.classList.toggle('nav-open');
+      elements.mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close when clicking nav link
+    elements.navMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        elements.navMenu.classList.remove('nav-open');
+        elements.mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /**
+   * Demo Data Reset
+   */
+  function initDataReset() {
+    if (!elements.resetDataBtn) return;
+
+    elements.resetDataBtn.addEventListener('click', () => {
+      if (confirm('Reset community questions, bookmarks, and votes back to default demo seeds?')) {
+        window.MiniAskStorage.resetAllData();
+        initData();
+        state.currentCategory = 'all';
+        state.searchQuery = '';
+        state.bookmarksOnly = false;
+        state.expandedCardIds.clear();
+
+        if (elements.searchInput) elements.searchInput.value = '';
+        if (elements.bookmarksFilterToggle) elements.bookmarksFilterToggle.checked = false;
+
+        renderCategoryPills();
+        renderQuestionsList();
+        updateBookmarksCounter();
+        window.MiniAskUtils.showToast('Demo data restored successfully!', 'info', 2500);
+      }
+    });
+  }
+
+  /**
+   * Boot the application
+   */
+  function init() {
+    cacheElements();
+    initTheme();
+    initData();
+    renderCategoryPills();
+    renderTrendingChips();
+    renderQuestionsList();
+    updateBookmarksCounter();
+    initAskSection();
+    initFeedControls();
+    initFeedbackForm();
+    initMobileMenu();
+    initDataReset();
+    window.MiniAskMainLoaded = true;
+  }
+
+  // Run on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})(window, document);
+
+      window.MiniAskMainLoaded = true;
+    }
+  </script>
+
+</body>
+</html>
